@@ -8,7 +8,7 @@ import type { Article } from '../../types/article';
 import { Audio } from 'react-loader-spinner';
 import ProductListComp from '../ProductLIstComp/ProductListComp';
 import { products } from '../ProductLIstComp/products';
-import FormProduct from '../FormProduct/FormProduct';
+import FormProduct, { type OrderData } from '../FormProduct/FormProduct';
 
 interface ArticlesHttpResponse {
   hits: Article[];
@@ -17,13 +17,14 @@ interface ArticlesHttpResponse {
 export default function App() {
   //////////////////////////////////////////////////////////////////////////
   const [person, setPerson] = useState(null);
-
+  const [count, setCount] = useState(3);
   useEffect(() => {
     console.log('Effect ran!');
     axios
-      .get('https://swapi.info/api/people/1')
+      // 1. Використовуємо count в ефекті
+      .get(`https://swapi.info/api/people/${count}`)
       .then(response => setPerson(response.data));
-  }, []);
+  }, [count]);
 
   console.log('App rendred!');
 
@@ -32,6 +33,7 @@ export default function App() {
   const [articles, setArticles] = useState<Article[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [productList, setProductList] = useState(products);
+
   const handleSearch = async (topic: string) => {
     setIsLoading(true);
 
@@ -43,10 +45,11 @@ export default function App() {
     setArticles(response.data.hits);
   };
 
-  const handleSubmit = (productName: string) => {
+  const handleSubmit = (data: OrderData) => {
     const newProduct = {
       id: Date.now(),
-      name: productName,
+      name: data.productName,
+      price: data.productPrice,
     };
 
     setProductList(prev => [...prev, newProduct]);
@@ -54,6 +57,7 @@ export default function App() {
 
   return (
     <>
+      <button onClick={() => setCount(count + 1)}>The count is {count}</button>
       <pre>{JSON.stringify(person, null, 2)}</pre>
       <ProductListComp items={productList} />
 

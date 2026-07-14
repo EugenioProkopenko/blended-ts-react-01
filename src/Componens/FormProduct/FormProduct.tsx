@@ -2,18 +2,26 @@ import { useId } from 'react';
 import styles from './FormProduct.module.css';
 
 interface FormProductProps {
-  onSubmit: (velue: string) => void;
+  onSubmit: (value: OrderData) => void;
+}
+
+export interface OrderData {
+  productName: string;
+  productPrice: number;
 }
 
 export default function FormProduct({ onSubmit }: FormProductProps) {
   const fieldId = useId();
 
   const handleSubmit = (formData: FormData) => {
-    const productName = formData.get('productName') as string;
+    const orderData: OrderData = {
+      productName: formData.get('productName') as string,
+      productPrice: Number(formData.get('productPrice')),
+    };
 
     // const productPrice = formData.get('productPrice') as number;
 
-    onSubmit(productName);
+    onSubmit(orderData);
   };
   return (
     <form action={handleSubmit}>
