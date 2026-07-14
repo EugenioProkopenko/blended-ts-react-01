@@ -9,6 +9,7 @@ import { Audio } from 'react-loader-spinner';
 import ProductListComp from '../ProductLIstComp/ProductListComp';
 import { products } from '../ProductLIstComp/products';
 import FormProduct, { type OrderData } from '../FormProduct/FormProduct';
+import Timer from '../Timer/Taimer';
 
 interface ArticlesHttpResponse {
   hits: Article[];
@@ -66,6 +67,7 @@ export default function App() {
 
   return (
     <>
+      <Timer />
       <button onClick={() => setCount(count + 1)}>The count is {count}</button>
       <pre>{JSON.stringify(person, null, 2)}</pre>
       <ProductListComp items={productList} />
