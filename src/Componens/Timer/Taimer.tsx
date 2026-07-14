@@ -5,7 +5,6 @@ export default function Timer() {
   useEffect(() => {
     setInterval(() => {
       setTime(new Date());
-      console.log(`Interval - ${Date.now()}`);
     }, 1000);
   }, []);
   return <p>Timer box {time.toLocaleTimeString()}</p>;

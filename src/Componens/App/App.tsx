@@ -38,6 +38,7 @@ export default function App() {
   const [articles, setArticles] = useState<Article[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [productList, setProductList] = useState(products);
+  const [isOpen, setIsOpen] = useState(true);
 
   const handleSearch = async (topic: string) => {
     setIsLoading(true);
@@ -67,7 +68,10 @@ export default function App() {
 
   return (
     <>
-      <Timer />
+      <button onClick={() => setIsOpen(!isOpen)}>
+        {isOpen ? 'Приховати таймер' : 'Показати таймер'}
+      </button>
+      {isOpen && <Timer />}
       <button onClick={() => setCount(count + 1)}>The count is {count}</button>
       <pre>{JSON.stringify(person, null, 2)}</pre>
       <ProductListComp items={productList} />
