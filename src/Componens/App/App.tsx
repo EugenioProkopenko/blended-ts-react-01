@@ -20,10 +20,14 @@ export default function App() {
   const [count, setCount] = useState(3);
   useEffect(() => {
     console.log('Effect ran!');
-    axios
-      // 1. Використовуємо count в ефекті
-      .get(`https://swapi.info/api/people/${count}`)
-      .then(response => setPerson(response.data));
+    async function fetchData() {
+      const response = await axios.get(
+        `https://swapi.info/api/people/${count}`
+      );
+
+      setPerson(response.data);
+    }
+    fetchData();
   }, [count]);
 
   console.log('App rendred!');
@@ -36,6 +40,11 @@ export default function App() {
 
   const handleSearch = async (topic: string) => {
     setIsLoading(true);
+    {
+      isLoading && (
+        <Audio height={80} width={80} color="#4fa94d" ariaLabel="loading" />
+      );
+    }
 
     const response = await axios.get<ArticlesHttpResponse>(
       `https://hn.algolia.com/api/v1/search?query=${topic}`
