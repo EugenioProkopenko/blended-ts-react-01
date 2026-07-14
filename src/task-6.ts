@@ -12,6 +12,8 @@ const user: User = {
   },
 };
 
+console.log(user);
+
 /*console.log(user.address?.city);
 
 Завдання:

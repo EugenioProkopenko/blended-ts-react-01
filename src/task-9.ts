@@ -51,3 +51,4 @@ function getLastElement<T>(container: Container<T>): T {
   return container.getItem(container.items.length - 1);
 }
 console.log(getLastElement(numberContainer));
+console.log(stringContainer);
